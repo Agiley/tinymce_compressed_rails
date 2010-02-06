@@ -19,9 +19,9 @@ class TinyMceGzipController < ApplicationController
     
     custom = [] #custom js files
 
-    languages = params[:languages].split(/,/)
-    plugins = params[:plugins].split(/,/)
-    themes = params[:themes].split(/,/)
+    languages = (params.has_key?(:languages)) ? params[:languages].split(/,/) : []
+    plugins = (params.has_key?(:plugins)) ? params[:plugins].split(/,/) : []
+    themes = (params.has_key?(:themes)) ? params[:themes].split(/,/) : []
     
     tinymce_dir = File.join(RAILS_ROOT, "public", "javascripts", "tiny_mce")
     

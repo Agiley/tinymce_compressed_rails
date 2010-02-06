@@ -34,7 +34,7 @@ module ActionController
                 controller.response.headers['Content-encoding'] = @compression_encoding
               end 
               
-              controller.send(:render_text, cache)
+              controller.send(:render, :text => cache)
               return false
             end
           elsif accepts_gzip?(controller)

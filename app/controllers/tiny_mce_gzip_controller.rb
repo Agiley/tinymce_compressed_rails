@@ -1,11 +1,9 @@
-class TinyMce::GzipController < ActionController::Base
-  require '../../../lib/gzip_action_cache'
-  
+class TinyMceGzipController < ActionController::Base
   before_filter { |c| c.headers["Content-Type"] = "Content-type: text/javascript; charset: UTF-8" }
-  caches_gzip_action :index, :check, :js
+  caches_gzip_action :index, :check, :gzip
   
   def index
-    out = File.read(File.join(File.dirname(__FILE__), "tiny_mce_gzip.js"))
+    out = File.read(File.join(File.dirname(__FILE__), "../../lib/tiny_mce_gzip.js"))
     out += "tinyMCE_GZ.init({});"
     render :text => out, :layout => false
   end
@@ -14,7 +12,7 @@ class TinyMce::GzipController < ActionController::Base
     render :text => "tinyMCE_GZ.check();", :layout => false
   end
   
-  def js
+  def gzip
     suffix = ''
     
     custom = [] #custom js files

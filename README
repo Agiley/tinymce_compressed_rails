@@ -1,30 +1,58 @@
-TineMceGzip
+TinyMce Gzip
 ===========
 
-By: Ben Kittrell - http://garbageburrito.com
-	DoodleBit LLC - http://doodlebit.com
-	
-For: DoodleKit Website Builer - http://doodlekit.com
+Originally By: Ben Kittrell - http://garbageburrito.com
+
+With Modifications By: Sebastian Johnsson - http://agileyhq.com
+
+Notes
+===========
+This is for personal use. I do not intend to support this.
+
 
 Assumptions
 ===========
 
-This plugin assumes that you have TinyMCE 2.0.6.1 or higher installed in /public/javascripts/tiny_mce.
+This plugin assumes that you have TinyMCE 3.3 or higher installed in /public/javascripts/tiny_mce.
+
+If you're using jQuery, get the jQuery-version of the TinyMCE-package.
 
 Installation
 ============
 
-Extract the plugin to vendor/plugins.  This README should be in RAILS_ROOT/vendor/plugins/tiny_mce_gzip
+ruby/script plugin install git@github.com:Agiley/tinymce_compressed_rails.git
 
-Add the following line to routes.rb
+If you're using jQuery:
+In your layout-file (or wherever you please.)
+<%= javascript_include_tag("tiny_mce/jquery.tinymce") %>
 
-	TinyMceGzip::Routes.add_routes
-	
+In your application.js (or whatever file you choose):
+
+Remember to change the selector according to your needs.
+
+$(document).ready(function(){		
+  $('textarea.tiny_mce').tinymce({
+    script_url : '/javascripts/tiny_mce/tiny_mce_gzipped.js',
+
+    // General options
+		language : "en",
+		theme : "advanced",
+		plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
+
+		// Theme options
+		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
+		theme_advanced_statusbar_location : "bottom",
+		theme_advanced_resizing : true,
+  });
+});
+
+Otherwise:
+
 Change your tiny_mce javascript include to the following.
-
 	<%= javascript_include_tag("tiny_mce/tiny_mce_gzip") %>
-	
-That's it!
 
 
 Additional Configuration
@@ -32,6 +60,9 @@ Additional Configuration
 
 To utilize the caching mechanism, ensure that the following property is set to true in production.rb.
 
-config.action_controller.perform_caching             = true
+config.action_controller.perform_caching  = true
 
 
+Todo
+=========================
+Fix file caching, right now it will not create a cached version of the gzipped js file.

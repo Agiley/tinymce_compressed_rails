@@ -1,5 +1,5 @@
-class TinyMceGzipController < ApplicationController
-  require 'gzip_action_cache'
+class TinyMce::GzipController < ActionController::Base
+  require '../../../lib/gzip_action_cache'
   
   before_filter { |c| c.headers["Content-Type"] = "Content-type: text/javascript; charset: UTF-8" }
   caches_gzip_action :index, :check, :js
